@@ -16,7 +16,27 @@ router.post("/", async (req, res) => {
 
     let saveIssue = await newIssuedBook.save();
     return res.status(200).send(saveIssue._id);
-  } catch (error) {}
-  return res.send("issue route reached");
+  } catch (error) {
+    return res.status(400).send(error);
+  }
 });
+router.get("/allissues", async (req, res) => {
+  //   res.send("issue schema reach");
+  try {
+    let saveIssue = await IssueSchema.find({});
+    return res.status(200).send(saveIssue);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  console.log(req.params.id);
+  try {
+    let saveIssue = await IssueSchema.findById(req.params.id);
+    return res.status(200).send(saveIssue);
+  } catch (error) {}
+  //   return res.send("issue route reached");
+});
+
 module.exports = router;

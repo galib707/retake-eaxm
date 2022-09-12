@@ -50,12 +50,15 @@ router.get("/listAllAuthors", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   console.log("param id", req.params.id);
-  const id = req.params.id;
+  const id = req.params.id.toString();
   try {
-    let listOfBooksWrittenBySepcificAuthor = await AuthorSchema.findById({
-      _id: id,
-    }).populate("books");
-    console.log(listOfBooksWrittenBySepcificAuthor);
+    let listOfBooksWrittenBySepcificAuthor = await AuthorSchema.findById(
+      {
+        _id: id,
+      },
+      { name: 0, _id: 0, createdAt: 0, updatedAt: 0, __v: 0 }
+    ).populate("books", "title");
+    // console.log(listOfBooksWrittenBySepcificAuthor["books"]);
     return res.status(200).json(listOfBooksWrittenBySepcificAuthor);
   } catch (error) {
     return res.status(400).send(error);

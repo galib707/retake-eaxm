@@ -20,7 +20,7 @@ router.post("/addANewBook", async (req, res) => {
     let author = await AuthorSchema.findById(author_id);
 
     let updateAuthor = JSON.parse(JSON.stringify(author));
-    updateAuthor["books"].push(author_id);
+    updateAuthor["books"].push(addNewBook);
     console.log("jsonOBJ", updateAuthor);
 
     let addUpdateAuthor = await AuthorSchema.findOneAndReplace(
